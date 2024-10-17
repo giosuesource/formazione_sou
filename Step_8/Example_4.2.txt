@@ -1,0 +1,3 @@
+Questo script inizia assegnando un numero alla variabile "a", per poi mandarlo in stampa. Successivamente viene effettuata una nuova assegnazione su "a", inserendo al suo interno il risultato di un operazione aritmetica, per poi stampare il suo nuovo contenuto. 
+Viene poi creato un ciclo For, inserisce all' interno della variabile "a" alcuni numeri e man mano li manda in stampa. Il comando ECHO viene utilizzato con l' opzione -n, che permette di non andare alla riga successiva ad ogni stampa, per cui l'output del ciclo for sarà su singola riga.
+Nell' ultima parte dello script viene effettuata un' altra assegnazione: questa volta viene richiesto in input un valore o una stringa all' utente per essere assegnato in "a", per poi mandarlo in stampa.
