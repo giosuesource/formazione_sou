@@ -1,0 +1,77 @@
+- name: Install Python and Docker
+  hosts: all
+  become: true
+  gather_facts: no
+    
+  tasks:   
+    - name: Install necessary packages
+      apt:
+        update_cache: yes
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3   
+        - python3-pip 
+        - docker.io
+        - ca-certificates
+    
+    - name: Install Python dependencies
+      pip:
+        name: requests
+        state: present
+ #     when: ansible_python_version >=3.0
+
+    - name: Install Docker GPG APT key
+      apt_key:
+        url: https://get.docker.com/gpg
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install NTP
+      apt:
+        name: ntp
+        state: present
+
+    - name: time alignment
+      timezone:
+        name: Europe/Rome
+
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: ealen/echo-server
+        source: pull
+
+    - name: Crea prova1
+      docker_container:
+        name: Container1
+        image: ealen/echo-server
+        state: started
+
+    - name: accensione nodo1
+      cron:
+        name: node1.a
+        minute: "1-59/2"
+        job: sudo -i docker start Container1
+  
+    - name: spegnimento nodo1
+      cron:
+        name: node1.s
+        minute: "0-58/2"
+        job: sudo -i docker kill Container1
+        
+    - name: accensione nodo2
+      cron:
+        name: node2.a
+        minute: "0-58/2"
+        job: sudo -i docker start Container1
+        
+    - name: spegnimento nodo2
+      cron:
+        name: node2.s
+        minute: "1-59/2"
+        job: sudo -i docker kill Container1

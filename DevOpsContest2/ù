@@ -1,0 +1,33 @@
+  - name: Prova Playbook
+      hosts: all
+      become: true
+ 
+   tasks:
+     -name: install aptitude
+     apt:
+      name: aptitude
+      state: present
+
+   - name: Install system packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - docker.io
+      - ca-certificates
+
+   - name: Install Docker GPG APT key
+     apt_key:
+       url: https://get.docker.com/gpg
+       state: present
+
+   - name: Install Docker
+     apt:
+       name: docker.io
+       state: present
+
+   - name: Start Docker service
+     service:
+       name: docker
+       state: started
+       enabled: yes
