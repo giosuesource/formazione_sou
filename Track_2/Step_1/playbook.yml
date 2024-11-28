@@ -1,0 +1,93 @@
+- name: Install Docker
+  hosts: all
+  become: true
+    
+  tasks:   
+    - name: Install required packages
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+        - python3
+        - python3-pip
+        
+    - name: Install Python dependencies
+      pip:
+        name: requests
+        state: present
+        
+    - name: Add Docker repository
+      yum_repository:
+        name: docker-ce
+        description: Docker CE repository
+        baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/rhel/gpg
+        
+    - name: Install Docker
+      yum:
+        name: docker-ce
+        state: latest
+        
+    - name: Install Java
+      yum:
+        name: java
+        state: latest
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+        
+    - name: Crea un Docker network 
+      docker_network:
+        name: primo_net
+        ipam_config:
+          - subnet: 192.168.2.0/24
+            gateway: 192.168.2.1
+            iprange: 192.168.2.0/24
+            
+    - name: Pull JenkinsM
+      community.docker.docker_image:
+        name: jenkins/jenkins:lts
+        source: pull
+        
+    - name: Pull JenkinsS
+      community.docker.docker_image:
+        name: jenkins/inbound-agent
+        source: pull
+        
+    - name: Crea ContainerMaster
+      docker_container:
+        name: ContainerM
+        image: jenkins/jenkins:lts
+        state: started
+        networks:
+          - name: primo_net
+            ipv4_address: "192.168.2.2"
+        ports:
+          - "8080:8080"  # Porta per l'interfaccia web di Jenkins
+          - "50000:50000"  # Porta per la comunicazione con lo slave
+        volumes:
+          - jenkins_data:/var/jenkins_home  # Persistenza dei dati di Jenkins
+     
+    - name: Create Jenkins Slave Container (ContainerS)
+      docker_container:
+        name: ContainerS
+        image: jenkins/inbound-agent
+        networks:
+          - name: primo_net
+            ipv4_address: "192.168.2.3"
+        env:
+          JENKINS_URL: "http://192.168.2.2:8080/"
+          JENKINS_AGENT_NAME: "ContainerS"
+          JENKINS_AGENT_WORKDIR: "/home/jenkins"
+          JENKINS_SECRET: "29b31f47877b8f3a879a0528a423a79bd78f6600d110fb80f920b84d4e9ad9a1"
+        state: started
+
+
