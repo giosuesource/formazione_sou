@@ -19,7 +19,6 @@
       pip:
         name: requests
         state: present
- #     when: ansible_python_version >=3.0
 
     - name: Install Docker GPG APT key
       apt_key:
@@ -54,24 +53,24 @@
 
     - name: accensione nodo1
       cron:
-        name: nodo1
+        name: node1.a
         minute: "1-59/2"
         job: sudo -i docker start Container1
   
     - name: spegnimento nodo1
       cron:
-        name: nodo1
+        name: node1.s
         minute: "0-58/2"
         job: sudo -i docker kill Container1
         
     - name: accensione nodo2
       cron:
-        name: nodo2
+        name: node2.a
         minute: "0-58/2"
         job: sudo -i docker start Container1
         
     - name: spegnimento nodo2
       cron:
-        name: nodo2
+        name: node2.s
         minute: "1-59/2"
         job: sudo -i docker kill Container1
