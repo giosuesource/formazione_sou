@@ -51,26 +51,32 @@
         image: ealen/echo-server
         state: started
 
-    - name: accensione nodo1
+- hosts: nodo1
+  become: yes
+  tasks:
+    - name: start container nodo1
       cron:
-        name: node1.a
-        minute: "1-59/2"
+        name: nodo1.accensione
+        minute: 1-59/2
         job: sudo -i docker start Container1
-  
-    - name: spegnimento nodo1
+
+    - name: stop container nodo1
       cron:
-        name: node1.s
-        minute: "0-58/2"
+        name: nodo1.spegnimento
+        minute: 0-58/2
         job: sudo -i docker kill Container1
-        
-    - name: accensione nodo2
+
+- hosts: nodo2
+  become: yes
+  tasks:
+    - name: start container nodo2
       cron:
-        name: node2.a
-        minute: "0-58/2"
+        name: nodo2.accensione
+        minute: 0-58/2
         job: sudo -i docker start Container1
-        
-    - name: spegnimento nodo2
+
+    - name: stop container nodo2
       cron:
-        name: node2.s
-        minute: "1-59/2"
+        name: nodo2.spegnimento
+        minute: 1-59/2
         job: sudo -i docker kill Container1
