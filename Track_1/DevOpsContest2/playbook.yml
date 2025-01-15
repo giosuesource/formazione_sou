@@ -54,24 +54,24 @@
 
     - name: accensione nodo1
       cron:
-        name: nodo1.a
+        name: nodo1
         minute: "1-59/2"
         job: sudo -i docker start Container1
   
     - name: spegnimento nodo1
       cron:
-        name: nodo1.s
+        name: nodo1
         minute: "0-58/2"
         job: sudo -i docker kill Container1
         
     - name: accensione nodo2
       cron:
-        name: nodo2.a
+        name: nodo2
         minute: "0-58/2"
         job: sudo -i docker start Container1
         
     - name: spegnimento nodo2
       cron:
-        name: nodo2.s
+        name: nodo2
         minute: "1-59/2"
         job: sudo -i docker kill Container1
