@@ -1,5 +1,4 @@
-
-# Ping Pong
+## Ping Pong
 
 Per questo progetto sono stati utilizzati Vagrant e Ansible per creare due nodi Linux con Docker al loro interno.
 
