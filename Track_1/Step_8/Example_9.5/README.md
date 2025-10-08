@@ -1,5 +1,4 @@
-
-# Descrizione dello Script 9.5
+## Descrizione dello Script 9.5
 
 ROOT_UID=0   # Root has $UID 0.
  
