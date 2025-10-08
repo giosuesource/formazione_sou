@@ -1,5 +1,4 @@
-
-# Descrizione dello Script 32.7
+## Descrizione dello Script 32.7
 
  
 interval=1
