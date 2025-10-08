@@ -1,5 +1,4 @@
-
-# Descrizione dello Script 4.5
+## Descrizione dello Script 4.5
 
 MINPARAMS=10
  
