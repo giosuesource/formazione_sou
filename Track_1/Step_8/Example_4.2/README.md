@@ -1,5 +1,4 @@
-
-# Descrizione dello Script 4.2
+## Descrizione dello Script 4.2
  
 echo
 
