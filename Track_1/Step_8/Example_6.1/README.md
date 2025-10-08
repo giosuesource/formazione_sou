@@ -1,5 +1,4 @@
-
-# Descrizione dello Script 6.1
+## Descrizione dello Script 6.1
 
 echo hello
 echo $?    # Exit status 0 returned because command executed successfully.
