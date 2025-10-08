@@ -1,5 +1,5 @@
 
-# Step. 1
+## Step. 1
 Lo scopo di questo esercizio è quello di configurare un Jenkins Master e un Jenkins Slave, utilizzando Vagrant per creare la VM e Ansible per tirare su i 2 containers. Il container Agent si dovrà collegare al container Master per poter svolgere le operazioni descritte negli step successivi.
 
 Nel Vagrantfile è stata configurata la VirtualMachine "macchina", avente Rocky Linux 9 come sistema operativo. Sono state configurate le porte 8080 e 50000, le quali ci serviranno successivamente.
