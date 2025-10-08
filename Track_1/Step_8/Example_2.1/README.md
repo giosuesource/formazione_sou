@@ -1,5 +1,4 @@
-
-# Descrizione dello Script 2.1
+## Descrizione dello Script 2.1
  
 cd /var/log
 cat /dev/null > messages
